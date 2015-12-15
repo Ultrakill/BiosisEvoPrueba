@@ -6,9 +6,15 @@
 package vistas.mantenimientos;
 
 import com.personal.utiles.FormularioUtil;
+import controladores.AreaEmpleadoControlador;
 import controladores.Controlador;
 import controladores.DepartamentoControlador;
+import controladores.EmpleadoControlador;
+import entidades.escalafon.AreaEmpleado;
 import entidades.escalafon.Departamento;
+import entidades.escalafon.Empleado;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -16,6 +22,11 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
+import org.jdesktop.beansbinding.AutoBinding;
+import org.jdesktop.beansbinding.BeanProperty;
+import org.jdesktop.observablecollections.ObservableCollections;
+import org.jdesktop.swingbinding.JTableBinding;
+import org.jdesktop.swingbinding.SwingBindings;
 import vistas.dialogos.DlgOficina;
 import vistas.renders.RenderArea;
 
@@ -50,8 +61,6 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
         btnModificar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        trAreas = new javax.swing.JTree();
         pnlInformación = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -65,6 +74,13 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
         txtCodigo = new javax.swing.JTextField();
         chkSede = new javax.swing.JCheckBox();
         btnLimpiarSuperior = new javax.swing.JButton();
+        pnlPaco = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        trAreas = new javax.swing.JTree();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblEmpleados = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("REGSTRO DE SEDES Y ÁREAS DE LA INSTITUCIÓN");
@@ -116,24 +132,6 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
         jPanel1.add(pnlBotones, gridBagConstraints);
-
-        trAreas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        trAreas.setRowHeight(30);
-        trAreas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                trAreasMouseReleased(evt);
-            }
-        });
-        jScrollPane1.setViewportView(trAreas);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 0.2;
-        jPanel1.add(jScrollPane1, gridBagConstraints);
 
         pnlInformación.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
         java.awt.GridBagLayout pnlInformaciónLayout = new java.awt.GridBagLayout();
@@ -241,20 +239,79 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
         gridBagConstraints.weighty = 0.1;
         jPanel1.add(pnlInformación, gridBagConstraints);
 
+        pnlPaco.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
+
+        trAreas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        trAreas.setRowHeight(30);
+        trAreas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                trAreasMouseReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(trAreas);
+
+        pnlPaco.add(jScrollPane1);
+
+        tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane3.setViewportView(tblEmpleados);
+
+        jLabel6.setText("Empleados del área: ");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pnlPaco.add(jPanel2);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        jPanel1.add(pnlPaco, gridBagConstraints);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -268,17 +325,11 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
             Object elemento = nodo.getUserObject();
             if (elemento instanceof Departamento) {
                 mostrar((Departamento) elemento);
+                mostrarFicho((Departamento) elemento);
             }
         }
 
     }//GEN-LAST:event_trAreasMouseReleased
-
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
-        FormularioUtil.limpiarComponente(pnlInformación);
-        activarControles(Controlador.NUEVO);
-        depc.prepararCrear();
-    }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnLimpiarSuperiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarSuperiorActionPerformed
         // TODO add your handling code here:
@@ -293,15 +344,11 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
         this.mostrarSuperior(this.departamentoSeleccionado);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) trAreas.getLastSelectedPathComponent();
-        Object elemento = nodo.getUserObject();
-        if (elemento instanceof Departamento) {
-            depc.setSeleccionado((Departamento) elemento);
-            mostrar((Departamento) elemento);
-        }
-        activarControles(Controlador.MODIFICAR);
-    }//GEN-LAST:event_btnModificarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        FormularioUtil.limpiarComponente(this.pnlInformación);
+        activarControles(0);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
@@ -327,11 +374,22 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) trAreas.getLastSelectedPathComponent();
+        Object elemento = nodo.getUserObject();
+        if (elemento instanceof Departamento) {
+            depc.setSeleccionado((Departamento) elemento);
+            mostrar((Departamento) elemento);
+        }
+        activarControles(Controlador.MODIFICAR);
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        FormularioUtil.limpiarComponente(this.pnlInformación);
-        activarControles(0);
-    }//GEN-LAST:event_btnCancelarActionPerformed
+        FormularioUtil.limpiarComponente(pnlInformación);
+        activarControles(Controlador.NUEVO);
+        depc.prepararCrear();
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -346,11 +404,16 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlInformación;
+    private javax.swing.JPanel pnlPaco;
+    private javax.swing.JTable tblEmpleados;
     private javax.swing.JTree trAreas;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextArea txtDescripcion;
@@ -370,7 +433,7 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
         modeloDepartamento = new DefaultTreeModel(nodoPrincipal);
         renderDepartamento = new RenderArea();
         trAreas.setModel(modeloDepartamento);
-
+        bindeoSalvaje();
         trAreas.setCellRenderer(renderDepartamento);
         List<Departamento> departamentos = depc.buscarXJerarquia();
         System.out.println("DEPARTAMENTOS JERARQUIA: " + departamentos.size());
@@ -407,6 +470,27 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
 //        }
     }
 
+    AreaEmpleadoControlador ec = new AreaEmpleadoControlador();
+    
+    private void mostrarFicho(Departamento area){
+        Date fechaActual = new Date();
+        lista.clear();
+        List<AreaEmpleado> preLista = ec.buscarXAreaxFecha(area, fechaActual);
+        List<AreaEmpleado> postLista = new ArrayList();
+        for(int i=0; i< preLista.size(); i++){
+            if(preLista.get(i).getFechaFin() == null){
+                if(preLista.get(i).getFechaInicio().compareTo(fechaActual)<=0){
+                    postLista.add(preLista.get(i));
+                }
+            }else{
+                if(preLista.get(i).getFechaInicio().compareTo(fechaActual)<=0 && preLista.get(i).getFechaFin().compareTo(fechaActual)>=0){
+                    postLista.add(preLista.get(i));
+                }
+            }
+        }
+        lista.addAll(postLista);
+    }
+    
     private void mostrar(Departamento departamento) {
         this.txtNombre.setText(departamento.getNombre());
         this.chkSede.setSelected(departamento.isSede());
@@ -449,4 +533,25 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
         
         return errores > 0;
     }
+    
+    
+    
+    List<AreaEmpleado> lista;
+    private void bindeoSalvaje() {
+        lista = ObservableCollections.observableList(new ArrayList<AreaEmpleado>());
+        JTableBinding binding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, lista, tblEmpleados);
+
+        BeanProperty pNroDocumento = BeanProperty.create("empleado.nroDocumento");
+        BeanProperty pNombre = BeanProperty.create("empleado.nombre");
+        BeanProperty pApellidoPaterno = BeanProperty.create("empleado.paterno");
+        BeanProperty pApellidoMaterno = BeanProperty.create("empleado.materno");
+
+        binding.addColumnBinding(pNroDocumento).setColumnName("Nro. Documento").setEditable(false);
+        binding.addColumnBinding(pNombre).setColumnName("Nombre").setEditable(false);
+        binding.addColumnBinding(pApellidoPaterno).setColumnName("Apellido paterno").setEditable(false);
+        binding.addColumnBinding(pApellidoMaterno).setColumnName("Apellido materno").setEditable(false);
+
+        binding.bind();
+    }
+    
 }

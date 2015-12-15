@@ -77,6 +77,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         grpOpcion = new javax.swing.ButtonGroup();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         pnlListado = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
@@ -484,17 +485,14 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         gridBagConstraints.weightx = 0.1;
         pnlListado.add(onlBusqueda, gridBagConstraints);
 
+        jTabbedPane1.addTab("Horarios", pnlListado);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 310;
-        gridBagConstraints.ipady = 430;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.2;
-        gridBagConstraints.weighty = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(12, 12, 12, 0);
-        getContentPane().add(pnlListado, gridBagConstraints);
+        gridBagConstraints.ipadx = -190;
+        gridBagConstraints.ipady = 905;
+        getContentPane().add(jTabbedPane1, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -785,6 +783,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel onlBusqueda;
     private javax.swing.JPanel pnlAccionAsignado;
     private javax.swing.JPanel pnlAccionAsignado1;
@@ -866,7 +865,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         cboTipoFiltro.setModel(mcFiltro);
         cboTipoFiltro.setRenderer(new RenderFiltro());
 
-        String[] columnas = {"Codigo", "Horario", ""};
+        String[] columnas = {"Codigo", "Horario", "Descripcion"};
 
         MTHorario mt = new MTHorario(horarioList, columnas);
         MTDetalleHorarioHR mtdh = new MTDetalleHorarioHR(detalleHorarioList);

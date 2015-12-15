@@ -71,4 +71,25 @@ public class AreaEmpleadoControlador extends Controlador<AreaEmpleado> {
         param.put("fechaFin", fechaFin);
         return this.getDao().buscar(jpql, param);
     }
+    
+    public List<AreaEmpleado> buscarXArea(Departamento departamento, Date fechaInicio, Date fechaFin){
+        String jpql = "SELECT ae FROM AreaEmpleado ae WHERE "
+                + "ae.departamento = :departamento AND "
+                + "((ae.fechaInicio <= :fechaInicio AND :fechaFin >= ae.fechaInicio) OR (ae.fechaInicio >= :fechaInicio AND ae.fechaFin >= :fechaInicio))";
+        Map<String, Object> param = new HashMap<>();
+        param.put("departamento", departamento);
+        param.put("fechaInicio", fechaInicio);
+        param.put("fechaFin", fechaFin);
+        return this.getDao().buscar(jpql, param);
+    }
+    
+    public List<AreaEmpleado> buscarXAreaxFecha(Departamento departamento, Date fechaInicio){
+        String jpql = "SELECT ae FROM AreaEmpleado ae WHERE "
+                + "ae.departamento = :departamento";
+//                + " AND ((ae.fechaFin IS NULL AND ae.fechainicio >= :fechaInicio) OR (ae.fechaFin IS NOT NULL AND (ae.fechaInicio >= :fechaInicio AND ae.fechainicio <= :fechaFin)))";
+        Map<String, Object> param = new HashMap<>();
+        param.put("departamento", departamento);
+//        param.put("fechaInicio", fechaInicio);
+        return this.getDao().buscar(jpql, param);
+    }
 }

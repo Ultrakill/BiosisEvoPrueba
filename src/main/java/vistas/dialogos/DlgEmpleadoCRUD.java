@@ -1628,7 +1628,10 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
                 if (areaList.getFechaFin() == null) {
                     conteo++;
                 } else if (((dtFechaInicio.getDate().compareTo(areaList.getFechaInicio()) <= 0) & (dtFechaFin.getDate().compareTo(areaList.getFechaInicio()) >= 0)) || ((dtFechaInicio.getDate().compareTo(areaList.getFechaInicio()) >= 0) & (dtFechaInicio.getDate().compareTo(areaList.getFechaFin()) <= 0))) {
-                    erroresContratos++;
+                    if(accionT!=Controlador.MODIFICAR){
+                        erroresContratos++;
+                    }
+                    
                 }
             }
         }

@@ -6,6 +6,7 @@
 package controladores;
 
 import entidades.escalafon.Contrato;
+import entidades.escalafon.Departamento;
 import entidades.escalafon.Empleado;
 import entidades.escalafon.FichaGeneral;
 import entidades.escalafon.FichaLaboral;
@@ -49,6 +50,14 @@ public class EmpleadoControlador extends Controlador<Empleado> {
         mapa.put("patron", patron);
         return this.getDao().buscar(jpql, mapa);
     }
+    
+//    public List<Empleado> buscarXArea(Departamento area) {
+//        String jpql = "SELECT e FROM Empleado e WHERE "
+//                + "e.";
+//        Map<String, Object> mapa = new HashMap<>();
+//        mapa.put("area", area);
+//        return this.getDao().buscar(jpql, mapa);
+//    }
     
     public List<Empleado> buscarXPatron(String patron, int desde, int tamanio) {
         String jpql = "SELECT e FROM Empleado e WHERE "
